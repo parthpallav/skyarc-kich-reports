@@ -395,7 +395,7 @@ function PdfReport({ month, pdfRef }) {
               </div>
             </div>
             {/* Fixed width/height — no ResponsiveContainer so chart always renders off-screen */}
-            <AreaChart width={1072} height={340} data={report.days} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+            <AreaChart width={1072} height={340} data={report.days} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
               <defs>
                 <linearGradient id="pdf-otsFill" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor={theme.info} stopOpacity={0.3} />
@@ -408,7 +408,7 @@ function PdfReport({ month, pdfRef }) {
               </defs>
               <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
               <XAxis dataKey="label" tick={{ fill: theme.textMuted, fontSize: 11 }} axisLine={false} tickLine={false} dy={8} />
-              <YAxis tick={{ fill: theme.textMuted, fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={fmt} />
+              <YAxis tick={{ fill: theme.textMuted, fontSize: 11 }} axisLine={false} tickLine={false} tickFormatter={fmt} width={52} />
               <Area type="monotone" dataKey="ots" name="Gross OTS" stroke={theme.info} fill="url(#pdf-otsFill)" strokeWidth={2.5} />
               <Area type="monotone" dataKey="lts" name="True LTS" stroke={theme.primary2} fill="url(#pdf-ltsFill)" strokeWidth={2.5} />
             </AreaChart>
@@ -477,10 +477,10 @@ function PdfReport({ month, pdfRef }) {
                 <MiniLegend color={theme.primary2} label="True LTS" />
               </div>
             </div>
-            <LineChart width={1072} height={320} data={historicalBars} margin={{ top: 20, right: 10, left: -20, bottom: 10 }}>
+            <LineChart width={1072} height={320} data={historicalBars} margin={{ top: 20, right: 10, left: 10, bottom: 10 }}>
               <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
               <XAxis dataKey="label" tick={{ fill: theme.textMuted, fontSize: 12 }} axisLine={false} tickLine={false} dy={12} />
-              <YAxis tick={{ fill: theme.textMuted, fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={fmt} />
+              <YAxis tick={{ fill: theme.textMuted, fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={fmt} width={52} />
               <Line type="monotone" dataKey="OTS" name="Gross OTS" stroke={theme.info} strokeWidth={3} dot={{ r: 5, fill: theme.bg, stroke: theme.info, strokeWidth: 2 }} activeDot={{ r: 8, fill: theme.info }} />
               <Line type="monotone" dataKey="LTS" name="True LTS" stroke={theme.primary2} strokeWidth={4} dot={{ r: 6, fill: theme.bg, stroke: theme.primary2, strokeWidth: 2 }} activeDot={{ r: 9, fill: theme.primary2 }} />
             </LineChart>
@@ -887,7 +887,7 @@ function ClientDashboard({ month, pdfRef }) {
             </div>
             <div style={{ width: "100%", height: "26rem" }}>
               <ResponsiveContainer>
-                <AreaChart data={report.days} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                <AreaChart data={report.days} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                   <defs>
                     <linearGradient id="otsFill" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor={theme.info} stopOpacity={0.25} />
@@ -900,7 +900,7 @@ function ClientDashboard({ month, pdfRef }) {
                   </defs>
                   <CartesianGrid stroke="rgba(255,255,255,0.05)" vertical={false} />
                   <XAxis dataKey="label" tick={{ fill: theme.textMuted, fontSize: 12 }} axisLine={false} tickLine={false} dy={10} />
-                  <YAxis tick={{ fill: theme.textMuted, fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={fmt} />
+                  <YAxis tick={{ fill: theme.textMuted, fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={fmt} width={52} />
                   <Tooltip content={<ChartTooltip />} />
                   <Area type="monotone" dataKey="ots" name="Gross OTS" stroke={theme.info} fill="url(#otsFill)" strokeWidth={2.4} />
                   <Area type="monotone" dataKey="lts" name="True LTS" stroke={theme.primary2} fill="url(#ltsFill)" strokeWidth={2.4} />
@@ -957,10 +957,10 @@ function ClientDashboard({ month, pdfRef }) {
           </div>
           <div style={{ width: "100%", height: "28rem", marginTop: "2rem" }}>
             <ResponsiveContainer>
-              <LineChart data={historicalBars} margin={{ top: 20, right: 10, left: -20, bottom: 10 }}>
+              <LineChart data={historicalBars} margin={{ top: 20, right: 10, left: 10, bottom: 10 }}>
                 <CartesianGrid stroke="rgba(255,255,255,0.05)" vertical={false} />
                 <XAxis dataKey="label" tick={{ fill: theme.textMuted, fontSize: 13 }} axisLine={false} tickLine={false} dy={15} />
-                <YAxis tick={{ fill: theme.textMuted, fontSize: 13 }} axisLine={false} tickLine={false} tickFormatter={fmt} />
+                <YAxis tick={{ fill: theme.textMuted, fontSize: 13 }} axisLine={false} tickLine={false} tickFormatter={fmt} width={52} />
                 <Tooltip content={(props) => <ChartTooltip {...props} label={props.label} />} cursor={{ stroke: "rgba(255,255,255,0.1)", strokeWidth: 1 }} />
                 <Line type="monotone" dataKey="OTS" name="Gross OTS" stroke={theme.info} strokeWidth={3} dot={{ r: 5, fill: theme.bg, stroke: theme.info, strokeWidth: 2 }} activeDot={{ r: 8, fill: theme.info }} />
                 <Line type="monotone" dataKey="LTS" name="True LTS" stroke={theme.primary2} strokeWidth={4} dot={{ r: 6, fill: theme.bg, stroke: theme.primary2, strokeWidth: 2 }} activeDot={{ r: 9, fill: theme.primary2 }} />
