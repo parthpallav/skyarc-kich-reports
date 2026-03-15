@@ -25,26 +25,35 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 // --- Analytics Quotes (shuffle by month + client seed) ---
+// Each export gets a fresh quote — rotates across months and clients.
 const ANALYTICS_QUOTES = [
-  "Data doesn't lie. It just waits for the right billboard to confess.",
-  "Every impression is a conversation your brand started — make it count.",
-  "Reach is a number. Resonance is a feeling. We chase both.",
-  "The best campaigns don't interrupt people — they become part of the scenery.",
-  "Frequency builds familiarity. Familiarity builds trust. Trust builds business.",
-  "Your audience moves. Your message should too.",
-  "Visibility is rented. Recognition is earned.",
-  "In a city of a million billboards, the one they remember is yours.",
-  "OTS measures eyeballs. We measure moments.",
-  "Numbers tell you what happened. Insights tell you why it mattered.",
-  "The street never sleeps — neither does your brand.",
-  "Good creative gets seen. Great creative gets remembered. Ours gets both.",
+  { text: "Data doesn't lie. It just waits for the right billboard to confess.", author: "Skyarc" },
+  { text: "Every impression is a conversation your brand started — make it count.", author: "Skyarc" },
+  { text: "Reach is a number. Resonance is a feeling. We chase both.", author: "Skyarc" },
+  { text: "The best campaigns don't interrupt people — they become part of the scenery.", author: "Skyarc" },
+  { text: "Frequency builds familiarity. Familiarity builds trust. Trust builds business.", author: "Skyarc" },
+  { text: "Your audience moves. Your message should too.", author: "Skyarc" },
+  { text: "Visibility is rented. Recognition is earned.", author: "Skyarc" },
+  { text: "In a city of a million billboards, the one they remember is yours.", author: "Skyarc" },
+  { text: "OTS measures eyeballs. We measure moments.", author: "Skyarc" },
+  { text: "Numbers tell you what happened. Insights tell you why it mattered.", author: "Skyarc" },
+  { text: "The street never sleeps — neither does your brand.", author: "Skyarc" },
+  { text: "Good creative gets seen. Great creative gets remembered. Ours gets both.", author: "Skyarc" },
+  { text: "A billboard seen a thousand times becomes a landmark. That's your brand.", author: "Skyarc" },
+  { text: "The spotlight doesn't find you. You build it — one impression at a time.", author: "Skyarc" },
+  { text: "Not every eye that passes is a customer. But every customer once passed your screen.", author: "Skyarc" },
+  { text: "Outdoor advertising doesn't interrupt the journey. It is the journey.", author: "Skyarc" },
+  { text: "Your competitor bought a click. You bought a moment in someone's day.", author: "Skyarc" },
+  { text: "Data is the map. The billboard is the destination.", author: "Skyarc" },
 ];
 
 const getQuote = (month, clientKey = "c1") => {
   const monthOrder = ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"];
   const monthIndex = monthOrder.indexOf(month ?? monthOrder[0]);
-  const seed = (monthIndex < 0 ? 0 : monthIndex) + clientKey.charCodeAt(clientKey.length - 1);
-  return ANALYTICS_QUOTES[seed % ANALYTICS_QUOTES.length];
+  const idx = monthIndex < 0 ? 0 : monthIndex;
+  // Use charCode of last char of clientKey as additional seed so each client sees a different quote
+  const charSeed = clientKey ? clientKey.charCodeAt(clientKey.length - 1) : 0;
+  return ANALYTICS_QUOTES[(idx + charSeed) % ANALYTICS_QUOTES.length];
 };
 
 // --- Configuration & Theme ---
@@ -750,9 +759,9 @@ function PdfReport({ month, pdfRef }) {
           {/* Quirky quote */}
           <div style={{ textAlign: "center", marginBottom: "24px" }}>
             <div style={{ color: theme.primary, fontSize: "1.125rem", fontWeight: 800, letterSpacing: "0.02em", marginBottom: "6px" }}>
-              "{getQuote(month)}"
+              "{getQuote(month).text}"
             </div>
-            <div style={{ color: theme.textMuted, fontSize: "0.75rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>Find Your Spotlight. — Skyarc</div>
+            <div style={{ color: theme.textMuted, fontSize: "0.75rem", letterSpacing: "0.12em", textTransform: "uppercase" }}>— {getQuote(month).author} · Find Your Spotlight.</div>
           </div>
 
           {/* Footer row */}
@@ -996,7 +1005,7 @@ function ClientDashboard({ month, pdfRef }) {
                 <div style={{ color: theme.textSoft, fontSize: "0.875rem", marginTop: "0.25rem" }}>Granular campaign exposure table matching raw server logs</div>
               </div>
             </div>
-            <div style={{ maxHeight: "35rem", overflowY: "auto" }}>
+            <div>
               <table className="min-w-full relative">
                 <thead className="sticky top-0 z-10" style={{ background: theme.panel, boxShadow: `0 0.0625rem 0 ${theme.border}` }}>
                   <tr>
@@ -1119,9 +1128,9 @@ export default function App() {
           <div style={{ borderTop: `1px solid ${theme.border}`, paddingTop: "24px" }}>
             <div style={{ textAlign: "center", marginBottom: "20px" }}>
               <div style={{ color: theme.primary, fontSize: "1rem", fontWeight: 800, letterSpacing: "0.01em" }}>
-                "{getQuote(month)}"
+                "{getQuote(month).text}"
               </div>
-              <div style={{ color: theme.textMuted, fontSize: "0.6875rem", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: "6px" }}>— Skyarc</div>
+              <div style={{ color: theme.textMuted, fontSize: "0.6875rem", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: "6px" }}>— {getQuote(month).author} · Find Your Spotlight.</div>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
