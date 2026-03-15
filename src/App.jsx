@@ -41,7 +41,9 @@ const ANALYTICS_QUOTES = [
 ];
 
 const getQuote = (month, clientKey = "c1") => {
-  const seed = (month ?? 0) + clientKey.charCodeAt(clientKey.length - 1);
+  const monthOrder = ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"];
+  const monthIndex = monthOrder.indexOf(month ?? monthOrder[0]);
+  const seed = (monthIndex < 0 ? 0 : monthIndex) + clientKey.charCodeAt(clientKey.length - 1);
   return ANALYTICS_QUOTES[seed % ANALYTICS_QUOTES.length];
 };
 
