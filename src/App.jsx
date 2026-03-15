@@ -1121,7 +1121,7 @@ export default function App() {
               <div style={{ color: theme.primary, fontSize: "1rem", fontWeight: 800, letterSpacing: "0.01em" }}>
                 "{getQuote(month)}"
               </div>
-              <div style={{ color: theme.textMuted, fontSize: "0.6875rem", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: "6px" }}>Find Your Spotlight. — Skyarc</div>
+              <div style={{ color: theme.textMuted, fontSize: "0.6875rem", letterSpacing: "0.14em", textTransform: "uppercase", marginTop: "6px" }}>— Skyarc</div>
             </div>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: "12px" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
