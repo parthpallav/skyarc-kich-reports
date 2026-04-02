@@ -95,16 +95,16 @@ function generateKichData() {
         if (i === 0) raw = 1794;
         if (i === 1) raw = 1803;
         if (i > 1 && i <= 19) raw += 1;
-        otsMultiplier = 66;
+        otsMultiplier = 62;
         ltsMultiplier = 0.55;
       } else if (month === "2026-02") {
         raw = Math.round(1810 + Math.sin(i) * 15);
-        otsMultiplier = 70;
+        otsMultiplier = 68;
         ltsMultiplier = 0.58;
       } else if (month === "2026-03") {
         // March: moderate growth from Feb baseline
         raw = Math.round(1828 + Math.sin(i * 0.6) * 18);
-        otsMultiplier = 71;
+        otsMultiplier = 61;
         ltsMultiplier = 0.58;
       } else if (["2025-10", "2025-11", "2025-12"].includes(month)) {
         raw = Math.round(1490 + Math.sin(i * 0.5) * 25);
@@ -987,7 +987,7 @@ function ClientDashboard({ month, pdfRef }) {
       )}
 
       {activeTab === "verification" && (
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.5fr] gap-6 animate-in fade-in duration-500">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_2.5fr] gap-6 animate-in fade-in duration-500" style={{ alignItems: "start" }}>
           <GlassCard style={{ padding: "2rem", height: "fit-content" }}>
             <div className="flex items-center justify-between gap-4 mb-8">
               <div>
@@ -1014,16 +1014,16 @@ function ClientDashboard({ month, pdfRef }) {
             </div>
           </GlassCard>
 
-          <GlassCard style={{ padding: 0, overflow: "hidden" }}>
-            <div className="flex items-center justify-between px-8 py-6" style={{ borderBottom: `0.0625rem solid ${theme.border}` }}>
+          <GlassCard style={{ padding: 0, overflow: "hidden", display: "flex", flexDirection: "column", height: "670px" }}>
+            <div className="flex items-center justify-between px-8 py-6" style={{ borderBottom: `0.0625rem solid ${theme.border}`, flexShrink: 0 }}>
               <div>
                 <div style={{ color: theme.text, fontWeight: 800, fontSize: "1.25rem" }}>Daily Log Breakdown</div>
                 <div style={{ color: theme.textSoft, fontSize: "0.875rem", marginTop: "0.25rem" }}>Granular campaign exposure table matching raw server logs</div>
               </div>
             </div>
-            <div>
-              <table className="min-w-full relative">
-                <thead className="sticky top-0 z-10" style={{ background: theme.panel, boxShadow: `0 0.0625rem 0 ${theme.border}` }}>
+            <div style={{ overflowY: "auto", flex: 1 }}>
+              <table className="min-w-full" style={{ borderCollapse: "separate", borderSpacing: 0 }}>
+                <thead style={{ position: "sticky", top: 0, zIndex: 10, background: theme.panel, boxShadow: `0 0.0625rem 0 ${theme.border}` }}>
                   <tr>
                     {["Log Date", "Raw Count", "Gross OTS", "True LTS", "Network Status"].map((h) => (
                       <th key={h} style={{ color: theme.textMuted, fontSize: "0.75rem", textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700, padding: "1.25rem 2rem", textAlign: "left" }}>
@@ -1058,7 +1058,7 @@ function ClientDashboard({ month, pdfRef }) {
 
 // --- Main Shell ---
 export default function App() {
-  const [month, setMonth] = useState("2026-02");
+  const [month, setMonth] = useState(months[months.length - 1]);
   const pdfRef = useRef(null);
 
   return (
