@@ -48,7 +48,7 @@ const ANALYTICS_QUOTES = [
 ];
 
 const getQuote = (month, clientKey = "c1") => {
-  const monthOrder = ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"];
+  const monthOrder = ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03"];
   const monthIndex = monthOrder.indexOf(month ?? monthOrder[0]);
   const idx = monthIndex < 0 ? 0 : monthIndex;
   // Use charCode of last char of clientKey as additional seed so each client sees a different quote
@@ -77,7 +77,7 @@ const theme = {
 };
 
 const client = { id: "c1", brand: "KICH", username: "kich_skyarc", slots: 2, screens: ["KICH_TOP", "KICH_BOTTOM"] };
-const months = ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02"];
+const months = ["2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03"];
 
 // --- Mock Data Generator ---
 function generateKichData() {
@@ -101,11 +101,27 @@ function generateKichData() {
         raw = Math.round(1810 + Math.sin(i) * 15);
         otsMultiplier = 70;
         ltsMultiplier = 0.58;
+      } else if (month === "2026-03") {
+        // March: moderate growth from Feb baseline
+        raw = Math.round(1828 + Math.sin(i * 0.6) * 18);
+        otsMultiplier = 71;
+        ltsMultiplier = 0.58;
       } else if (["2025-10", "2025-11", "2025-12"].includes(month)) {
         raw = Math.round(1490 + Math.sin(i * 0.5) * 25);
         if (month === "2025-10") { otsMultiplier = 65; ltsMultiplier = 0.55; }
         if (month === "2025-11") { otsMultiplier = 72; ltsMultiplier = 0.58; }
         if (month === "2025-12") { otsMultiplier = 66; ltsMultiplier = 0.56; }
+      }
+
+      // 8th March — ICC T20 Final: KICH_BOTTOM aired match for ~6 hrs at night.
+      // Raw plays are lower (fewer ad slots), but OTS & LTS are independently higher
+      // because event footfall/traffic was significantly elevated throughout the day.
+      if (month === "2026-03" && i === 7) {
+        raw = 1516;                 // ~17% fewer ad plays (bottom screen occupied by match)
+        const ots = 148_000;        // ~14% above normal March day (~1828×71=129,788) — event crowd
+        const lts = 90_400;         // ~20% above normal (~75,277) — higher dwell, people stopping to watch
+        const delivered = Math.round(lts / 12); // 8,541 — brand's 1/12 time-share of elevated LTS
+        return { day: String(dayNum).padStart(2, "0"), label: String(dayNum), raw, ots, lts, delivered };
       }
 
       const ots = Math.round(raw * otsMultiplier);
